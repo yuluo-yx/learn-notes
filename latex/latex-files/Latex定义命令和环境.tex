@@ -1,0 +1,35 @@
+% 导言区
+\documentclass{ctexart}
+
+% \newcommand-定义命令
+% 命令只能由字母组成，不能以\end开头
+% \newcommand<命令>[<参数个数>][<首参数默认值>]{<具体定义>}
+
+% \newcommand可以是简单的字符串替换，例如
+% 使用\PRC 相当于People`s Republic of \emph{China}这个内容
+\newcommand\PRC{People`s Republic of \emph{China}}
+
+% \newcommand也可以使用参数
+% 参数个数可以从1到9，使用时用#1，#2……#9表示
+\newcommand\loves[2]{#1 喜欢 #2}
+\newcommand\hatedby[2]{#2 不受 #1 喜欢}
+
+% \newcommand的参数也可以有默认值
+% 指定参数个数的同时指定了首个参数的默认值，那么这个命令的
+% 第一个参数就成为可选的参数（要使用中括号指定）
+\newcommand\love[3][喜欢]{#2#1#3}
+
+% 正文区（文稿区）
+\begin{document}
+	\PRC
+	
+	% 注意参数的对应关系
+	\loves{猫儿}{鱼}
+
+	\hatedby{猫儿}{萝卜}
+
+	\love{猫儿}{鱼}
+	\love[最爱]{猫儿}{鱼}
+
+\end{document}
+

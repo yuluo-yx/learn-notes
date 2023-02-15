@@ -1,0 +1,201 @@
+查看进程：sudo lsof -i -s tcp:listen
+关闭进程：sudo kill 进程id
+返回上级目录：cd ..
+删除data目录：rm -fr sdata
+清除：clear
+新建sdata目录：mkdir sdata
+1.进入soft目录：cd soft
+2.进入sdata目录：cd sdata
+3.查看该目录：ls
+新建目录：mkdir -p sharda{1,2,3}
+	 mkdir -p shardb{1,2,3}
+	 mkdir -p config{1,2,3}
+	 mkdir -p mongos
+复制集：vim sharda1/mongod.conf
+配置文件：
+storage:
+  dbPath: /home/yuluo/soft/sdata/sharda1/
+  journal:
+    enabled: true
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: 0.25
+systemLog:
+  destination: file
+  logAppend: true
+  path: /home/yuluo/soft/sdata/sharda1/mongo.log
+net:
+  port: 27117
+  bindIp: 127.0.0.1
+processManagement:
+  fork: true
+  timeZoneInfo: /usr/share/zoneinfo
+replication:
+  replSetName: sharda
+sharding:
+  clusterRole: shardsvr
+保存：:w
+保存到sharda2里面：:w sharda2/mongod.conf
+保存到sharda3里面：:w sharda3/mongod.conf
+编辑sharda2：:e sharda2/mongod.conf
+(sharda1改为sharda2，端口号改成27118）
+编辑sharda3：:e sharda3/mongod.conf
+(sharda1改为sharda3，端口号改成27119）
+保存退出：:wq
+查看文件：tree
+4.启动进程：sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f sharda1/mongod.conf
+	    sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f sharda2/mongod.conf
+	    sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f sharda3/mongod.conf
+5.查看进程：sudo lsof -i -s tcp:listen
+6.初始化复制集：sudo ../mongosh-1.5.4-linux-x64/bin/mongosh --port 27117
+7.test>rs.initiate()
+(确认OK：1）
+sharda [direct: other] test>rs.add('127.0.0.1:27118')
+sharda [direct: other] test>rs.add('127.0.0.1:27119')
+(确认OK：1）
+sharda [direct: other] test>rs.status()
+(确认7主进程：'primary'，8,9副进程：'secondary')
+退出：sharda [direct: other] test>exit
+复制集：vim config1/mongod.conf
+配置文件：
+storage:
+  dbPath: /home/yuluo/soft/sdata/config1/
+  journal:
+    enabled: true
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: 0.25
+systemLog:
+  destination: file
+  logAppend: true
+  path: /home/yuluo/soft/sdata/config1/mongo.log
+net:
+  port: 27317
+  bindIp: 127.0.0.1
+processManagement:
+  fork: true
+  timeZoneInfo: /usr/share/zoneinfo
+replication:
+  replSetName: config
+sharding:
+  clusterRole: configsvr
+保存：:w
+保存到config2里面：:w config2/mongod.conf
+保存到config3里面：:w config3/mongod.conf
+编辑config2：:e config2/mongod.conf
+(config1改为config2，端口号改成27318）
+编辑config3：:e config3/mongod.conf
+(config1改为config3，端口号改成27319）
+保存退出：:wq
+查看文件：tree
+启动进程：sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f config1/mongod.conf
+	 sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f config2/mongod.conf
+	 sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f config3/mongod.conf
+查看进程：sudo lsof -i -s tcp:listen
+初始化复制集：sudo ../mongosh-1.5.4-linux-x64/bin/mongosh --port 27317
+test>rs.initiate()
+(确认OK：1）
+config [direct: other] test>rs.add('127.0.0.1:27318')
+config [direct: other] test>rs.add('127.0.0.1:27319')
+(确认OK：1）
+config [direct: other] test>rs.status()
+(确认7主进程：'primary'，8,9副进程：'secondary')
+退出：config [direct: other] test>exit
+复制集：vim mongos/mongos.conf
+配置文件：
+net:
+  bindIp: 127.0.0.1
+  port: 27017
+processManagement:
+  fork: true
+sharding:
+  configDB: config/127.0.0.1:27317,127.0.0.1:27318,127.0.0.1:27319
+systemLog:
+  destination: file
+  path: /home/yuluo/soft/sdata/mongos/mongos.log
+保存退出：:wq
+启动进程：sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongos -f mongos/mongos.conf
+查看进程：sudo lsof -i -s tcp:listen
+初始化复制集：sudo ../mongosh-1.5.4-linux-x64/bin/mongosh --port 27320（重点）		注意：port 37317（重点）
+[direct: mongos] test>sh.addShard('sharda/127.0.0.1:27117,127.0.0.1:27118,127.0.0.1:27119')
+(确认OK：1）
+[direct: mongos] test>sh.status()
+[direct: mongos] test>sh.enableSharding('mydb')
+(确认OK：1）
+[direct: mongos] test>sh.shardCollection('mydb.users', {_id: 'hashed'})
+(确认OK：1）
+[direct: mongos] test>sh.status()
+[direct: mongos] test>use mydb
+[direct: mongos] mydb>show collections
+[direct: mongos] mydb>db.users.find()
+[direct: mongos] mydb>for (let i = 0; i < 1000; i++) {db.users.insertOne({name: "name" + i})}
+[direct: mongos] mydb>db.users.find()
+[direct: mongos] mydb>db.users.countDocuments()
+1000
+[direct: mongos] mydb>exit
+初始化复制集：sudo ../mongosh-1.5.4-linux-x64/bin/mongosh --port 27117
+sharda [direct: primary] test>use mydb
+sharda [direct: primary] mydb>db.users.countDocuments() 
+1000
+sharda [direct: primary] mydb>exit
+拷贝到shardb1：cp sharda1/mongod.conf shardb1/
+复制集：vim shardb1/mongod.conf
+配置文件：
+storage:
+  dbPath: /home/yuluo/soft/sdata/shardb1/
+  journal:
+    enabled: true
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: 0.25
+systemLog:
+  destination: file
+  logAppend: true
+  path: /home/yuluo/soft/sdata/shardb1/mongo.log
+net:
+  port: 27217
+  bindIp: 127.0.0.1
+processManagement:
+  fork: true
+  timeZoneInfo: /usr/share/zoneinfo
+replication:
+  replSetName: shardb
+sharding:
+  clusterRole: shardsvr
+保存：:w
+保存到shardb2里面：:w shardb2/mongod.conf
+保存到shardb3里面：:w shardb3/mongod.conf
+编辑shardb2：:e shardb2/mongod.conf
+(shardb1改为shardb2，端口号改成27218）
+编辑shardb3：:e shardb3/mongod.conf
+(shardb1改为shardb3，端口号改成27219）
+保存退出：:wq
+启动进程：sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f shardb1/mongod.conf
+	 sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f shardb2/mongod.conf
+	 sudo ../mongodb-linux-x86_64-ubuntu2004-6.0.1/bin/mongod -f shardb3/mongod.conf
+查看进程：sudo lsof -i -s tcp:listen
+初始化复制集：sudo ../mongosh-1.5.4-linux-x64/bin/mongosh --port 27217
+test>rs.initiate()
+(确认OK：1）
+shardb [direct: other] test>rs.add('127.0.0.1:27517')（重点）
+shardb [direct: other] test>rs.add('127.0.0.1:27219')
+(确认OK：1）
+shardb [direct: other] test>rs.status()
+(确认7主进程：'primary'，8,9副进程：'secondary')
+退出：config [direct: other] test>exit
+终端：tmux attach
+初始化复制集：sudo ../mongosh-1.5.4-linux-x64/bin/mongosh --port 27320
+[direct: mongos] test>sh.status()
+[direct: mongos] test>sh.addShard('shardb/127.0.0.1:27217,127.0.0.1:27517,127.0.0.1:27219')
+[direct: mongos] test>sh.status()
+开端口：sudo ../mongosh-1.5.4-linux-x64/bin/mongosh --port 27217
+shardb [direct: primary] test>use mydb
+shardb [direct: primary] test>db.users.countDocuments()
+507
+初始化复制集：sudo ../mongosh-1.5.4-linux-x64/bin/mongosh --port 27117
+sharda [direct: primary] test>use mydb
+sharda [direct: primary] test>db.users.countDocuments()
+1000
+
+
+

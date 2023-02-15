@@ -1,0 +1,172 @@
+% 导言区
+\documentclass{ctexart}
+
+\usepackage{ctex}
+\usepackage{amsmath}
+
+% 定义新命令
+%\newcommand{\adots}{\mathinner}{\mkern2mu%
+%					\raisebox{0.1em}{.}\mkern2mu\raisebox{0.4em{.}%
+%					\mkern2mu\raisebox{0.7em{.}\mkern1mu}
+%					}
+
+% 正文区（文稿区）
+\begin{document}
+
+	% 在LaTex中可以使用matrix环境实现矩阵的排版,需要引入amsmath宏包,与表格环境类似，也可以使用&分割列，\\ 分割行
+	\[
+		\begin{matrix}
+			0 & 1 \\
+			1 & 0
+		\end{matrix}
+	\]
+
+	% pmatrix 用于在矩阵两边加小括号
+		\[
+		\begin{pmatrix}
+			0 & 1 \\
+			1 & 0
+		\end{pmatrix}
+	\]
+
+	% bmatrix 用于在矩阵两边加中括号
+		\[
+		\begin{bmatrix}
+			0 & 1 \\
+			1 & 0
+		\end{bmatrix}
+	\]
+
+	% Bmatrix 用于在矩阵两边加大括号
+		\[
+		\begin{Bmatrix}
+			0 & 1 \\
+			1 & 0
+		\end{Bmatrix}
+	\]	
+
+	% vatrix 用于在矩阵两边加单竖线
+		\[
+		\begin{vmatrix}
+			0 & 1 \\
+			1 & 0
+		\end{vmatrix}
+	\]
+
+	% Vatrix 用于在矩阵两边加双竖线
+		\[
+		\begin{Vmatrix}
+			0 & 1 \\
+			1 & 0
+		\end{Vmatrix}
+	\]
+
+	% 使用上下标
+			\[
+		\begin{pmatrix}
+			a_{11}^2 & a_{12}^2 & a_{13}^2 \\
+			0 & a_{22} & a_{23}\\
+			0 & 0 & a_{33}
+		\end{pmatrix}
+	\]
+	
+	% 矩阵中常用的省略号可以使用\dots, \vdots, \ddots
+	% 在数学模式中可以使用\time命令排版乘号
+	% 使用\adots实现从右到左的点号，需要自定义一个新命令
+	\[
+		\begin{bmatrix}
+			a_{11} & \dots & a_{1n}\\
+%			\adots & \ddots & \vdots \\
+			& \ddots & \vdots \\
+			0 & & a_{nn}
+		\end{bmatrix}_{n \times n}
+	\]
+
+	% 分块矩阵，嵌套矩阵
+	% \text命令用于在数学模式中临时切换到文本模式
+	\[
+		\begin{pmatrix}
+			\begin{matrix} 1 & 0 \\ 0 & 1 \end{matrix}
+			& \text{\Large 0} \\
+			\text{\Large 0} & \begin{matrix}
+			1 & 0 \\ 0 & -1 \end{matrix}
+		\end{pmatrix}
+	\]
+
+	% 三角矩阵
+	% 可以使用\multicolumn合并多列 \raisebox合并多列
+	\[\begin{pmatrix}
+	a_{11} & a_{12} & \cdots & a_{1n} \\
+	& a_{22} & \cdots & a_{2n} \\
+	&        & \ddots & \vdots \\
+	\multicolumn{2}{c}{\raisebox{1.3ex}[0pt]{\Huge 0}}
+	&        & a_{nn}
+	\end{pmatrix}
+	\]
+
+	% 跨列的省略号：\hdotsfor{<列数>}
+	\[
+	\begin{pmatrix}	
+	1 & \frac 12 & \dots & \frac 1n \\
+	\hdotsfor{4} \\
+	m & \frac m2 & \dots & \frac mn
+	\end{pmatrix}
+	\]
+	
+	% 行内小矩阵 （smallmatrix）环境
+	复数 & z = (x,y)& 也可以用矩阵
+	\begin{math}
+	\left(   % 需要手动加上左括号
+	\begin{smallmatrix}
+	x & -y \\ y & x
+	\end{smallmatrix}
+	\right) % 需要手动加上右括号
+	\end{math} 来表示
+
+	% array环境（类似于表格环境tabular）
+	% 如果需要多个字母构成分母，需要{}分组
+	\[
+		\begin{array}{r|r}
+		\frac12 & 0 \\
+		\hline
+		0 & -\frac abc \\
+		\end{array}
+	\]
+	
+	% 用array环境构造复杂环境
+	\[
+	% @{<内容>} -添加任意内容，不占表项计数
+	% 此处添加一个负值空白，表示向左移-5pt的距离
+	\begin{array}{c@{\hspace{-5pt}}l]
+	% 第一行，第一列
+	\left(
+	\begin{array}{ccc|ccc}
+	a & \cdots & a & b & \cdots & b \\
+	& \ddots & \vdots & \vdots & \adots \\
+	&				& a & b\\ \hline
+	&				&   & c & \cdots & c\\
+	&				&   & \vdots & & \vdots \\
+	\multicolumn{3}{c|}{\raisebox}{2ex}[0pt]{\Huge 0}}
+	& c & \cdots & c
+	\end{array}
+	\right
+	& 
+	% 第一行第二列
+	\begin{array}{1}
+	% \left.仅表示与\right\ 配对，什么都不输出
+	\left.\rule{0mm}{7mm}\right\}p \\
+	\\
+	\left.\rule{0mm}{7mm}\right\}q
+	\end{array}
+	\\[-5pt]
+	% 第二行第一列
+	% \underbrace命令 排版横向大括号
+	\begin{array}{cc}
+	\underbrace{\rule{17mm}{0mm}}_m &
+	\underbrace{\rule{17mm}{0mm}}_m 
+	\end{array}
+	% 第二行第二列
+	\end{array}
+	\]
+
+\end{document}

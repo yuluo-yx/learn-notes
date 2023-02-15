@@ -1,0 +1,87 @@
+% 导言区 引入文档类
+\documentclass[12]{article} %book report, letter
+% 引入中文的宏包
+\usepackage{ctex}
+% 文章标题
+\title{latex基础练习文档}
+% 作者
+% 指定字体
+\author{\kaishu 姬世文}
+% 日期
+\date{\today}
+
+%新建字体设置命令
+\newcommand{\myfont}{\textit{\textbf{\textsf{Fancy Text}}}}
+
+%正文区 （文稿区）
+\begin{document}
+	\maketitle
+
+	hello world!
+
+	Let $f(x)$ be defined by the formula
+	$$f(x)=3x^2+x-1$$ which is a polynomial of degree 2.
+
+	% equation环境
+	\begin{equation}
+	AB^2 = BC^2 + AC^2
+	\end{equation}
+
+	% 字体族的设置（罗马字体 无衬线字体 打字机字体）
+
+	% 设置为罗马字体
+	\textrm{Roman Family}
+
+	\textsf{Sans Serif Family}
+
+	\texttt{Typewriter Family}
+
+	% 通过声明，声明后续的字体为罗马字体
+	\rmfamily Roamn Family
+
+	% 通过大括号的限定来声明作用字体的范围
+	{\sffamily who you are? you find self on everyone around!}
+	
+	{\ttfamily who you are? you find self on everyone around!}
+	
+	% 字体系列设置（粗细，宽度）
+	\textmd{Medium Series} \textbf{Boldface Series}
+
+	{\mdseries Medium Series} {\bfseries Boldface Series}
+
+	% 字体形状设置（直立，斜体，伪斜体，小型大写）
+
+	% 字体设置命令	
+	\textup{Upright Shape} \textit{Italic Shape}
+	\textsl{Slanted Shape} \textsc{Small Caps Shape}
+
+	% 字体设置声明
+	{\upshape Upright Shape} {\itshape Italic Shape} 
+	{\slshape Slanted Shape} {\scshape Small Caps Shape}
+	
+	% 中文字体设置
+	{\songti 宋体} \quad
+	{\heiti 黑体} \quad
+	{\fangsong 仿宋} \quad
+	{\kaishu 楷书} \quad
+
+	% 中文字体的粗体与斜体设置
+	中文字体的\textbf{粗体}与\textit{斜体}
+
+	% 字体大小设置
+	{\tiny 				yuluo}\\
+	{\scriptsize 		yuluo}\\
+	{\footnotesize  yuluo}\\
+	{\small				yuluo}\\
+	{\normalsize    yuluo}\\
+	{\large 			yuluo}\\
+	{\Large 			yuluo}\\
+	{\huge 				yuluo}\\
+	{\Huge				yuluo}\\
+
+	% 中文字号设置命令
+	\zihao{-0} 你好！
+
+	\myfont
+
+\end{document}

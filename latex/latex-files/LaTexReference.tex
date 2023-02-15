@@ -1,0 +1,41 @@
+% 导言区
+\documentclass{ctexart}
+\usepackage{ctex}
+
+% 正文区
+\begin{document}
+
+% 一次管理每一次使用
+% 参考文献格式：
+% \begin{thebibliography}{编号样本}
+% 		\bibitem[记号]{引用标志}文献条目1
+% 		\bibitem[记号]{引用标志}文献条目2
+% 		\bibitem[记号]{引用标志}文献条目3
+%		……
+% \end{thebibliography}
+% 	其中文献条目包括：作者，题目，出版社，年代，版本，页码等
+% 引用时候要可以采用：\cite{引用标志1，引用标志2}
+
+\begin{thebibliography}{99}
+	\bibitem{atricle1}陈立辉，苏伟，蔡川，陈小云.\emph{基于LaTex的Web数学公式提取方法研究}[J].计算机科学.2014(06)
+	\bibitem{book}William H. Press,Saul A. Teukolsky,
+	William T. Vetterling, Brian P. Flannery,
+	\emph{Numberical Recipes 3rd Edition:
+	The Art of Scientific Computing}
+	Cambridge University Press, New York,2007.
+	\bibitem{latexGuide} Kopka Helmut, W. Daly Patrick,
+	\emph{Guide to \LaTex}, $4^{th}$ Edition.
+	Available at \texttt{http://www.amazong.com}.
+	\bibitem{latexMath} Graetzer George, \emph{Math Into \LaTex},
+	BirkhAuser Boston; 3 edition ()June 22, 2000).
+\end{thebibliography}
+
+% 需要在tex stdio文件进行相应设置
+% biblatex/biber
+% 新的TEX惨开文献排版引擎
+% 样式文件（参考文献样式文件 --bbx文件，引用样式文件--cbx文件）使用LATEX编写
+% 支持根据本地化排版，如：
+%		biber -l zh_pinyin texfile, 用于指定按拼音排序
+% 		biber -l zh_stroke texfile, 用于按笔画排序
+
+\end{document}

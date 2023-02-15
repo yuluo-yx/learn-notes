@@ -1,0 +1,3 @@
+1.在ZooInspector\build目录下，双击zookeeper-dev-ZooInspector.jar即可。
+
+2.如果打不开，需要打开cmd进入到build目录下，输入java -jar zookeeper-dev-ZooInspector.jar回车即可

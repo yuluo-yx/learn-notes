@@ -1,0 +1,123 @@
+% 导言区
+\documentclass{ctexart}
+
+\usepackage{ctex}
+\usepackage{amsmath}
+
+% 正文区（文稿区）
+\begin{document}
+
+	\section{简介}
+	LaTex将排版内容分为文本模式和数学模式。文本模式用于普通文本的排版，数学模式用于数学公式的排版
+	\section{行内公式}
+	\subsection{美元符号}
+		交换律是$a+b=b+a$，如\(1+2=2+1=3\)
+	\subsection{小括号}
+		交换律是\(a+b=b+a\)，如\(1+2=2+1=3\)
+	\subsection{math环境}
+		\begin{math}
+			a+b=b+a
+		\end{math}
+		,如
+		\begin{math}
+			1+2=2+1=3
+		\end{math}
+	\section{上下标}
+	\subsection{上标}
+		$3x^2 - x + 2 = 0$
+		% 如果x的指数是两位数，要用大括号进行分组，确保正确的格式
+		$3x^{20} - x + 2 = 0$
+		% 在LaTex中也可以将一个已有的公式进行上标处理，要用大括号
+		$3x^{3x^2 - x + 2} - x + 2 = 0$
+	\subsection{下标}
+		a_0, a_1, a_2
+		% 同样有多个数字时，要使用大括号
+		a_{10}, a_{100}, a_{3x^2 - x + 2}
+	\section{希腊字母}
+		$\alpha$
+		$\beta$
+		$\gamma$
+		$\epsilon$
+		$\pi$
+		$\omega$
+
+		$\Gamma$
+		$\Delete$
+		$\Theta$
+		$\Pi$
+		$\Omega$
+
+		% 也可以用在数学公式的排版中
+		$\alpha^3 + \beta^2 + \gamma = 0$
+
+	\section{数学函数}
+		$\log$
+		$\sin$
+		$\cos$
+		$\arcsin$
+		$\arccon$
+		$\ln$
+
+		$\sin^2 x + \cos^2 x = 1$
+
+		y = \arcsin x$
+	
+		$y = \ln x$
+
+		$y = \long_2 x$
+
+		$\sqrt{2}$
+		$\sqrt{x^2 +y^2}$
+		$\sqrt{x + \sqrt{2}}$
+		% 4次根号下x
+		$\sqrt[4]{x}$
+
+	\section{分式}
+
+	大约是原体积的$3/4$
+	% 前一个是分子，后一个是分母
+	大约是原体积的$\frac{3}{4}$
+	
+	\section{行间公式}
+	\subsection{美元符号}
+
+	$$a+b=b+a$$
+	如
+	$$1+2=2+1=3$$
+
+	\subsection{中括号}
+
+	交换律是\[a+b=b+a\]
+	如
+	\[1+2=2+1=3\]
+
+	\subsection{displaymath环境}
+
+	\begin{displaymath}
+	a+b=b+a
+	\end{displaymath}
+	如
+	\begin{displaymath}
+	1+2=2+1=3
+	\end{displaymath}
+
+	\subsection{自动编号公式equation环境}
+	交换律见公式\ref{eq:commutative}
+	% 为使公式在文本中自动编号需要使用equation环境
+	\begin{equation}
+	% 也可以对equation中的公式用\label命令添加标签
+	a+b=b+a \label{eq:commutative}
+	\end{equation}
+
+	% 注意：带*的equation环境需要使用amsmath宏包
+	\subsection{不编号公式equation*环境}
+
+	交换律见公式\ref{eq:commutative2}
+
+	% 如果不需要对公式进行编号，可以使用带*号的equation环境
+	% 没有编号的公式在交叉引用的时候使用的是小节号
+	\begin{equation*}
+	a+b=b+a \label{eq:commutative2}
+	\end{equation*}
+
+\end{document}

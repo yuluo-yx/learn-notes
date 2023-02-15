@@ -1,0 +1,84 @@
+% 导言区
+\documentclass{article}
+
+\usepackage{ctex}
+
+% 正文区（文稿区）
+\begin{document}
+	\section{latex中的特殊符号}
+	\subsection{空白符号}
+	% 1em（当前字体中M的宽度）
+	1a\quad b
+
+	% 2em
+	2a\qquad b
+
+	% 约为1/6个em
+	3a\,b a\thinspace b
+
+	% 0.5个em
+	4a\enspace b
+
+	% 输出一个空格
+	5a\ b
+
+	% 硬空格（不能分割的空格）
+	6a~b
+	
+	% 指定空格长度
+	7a \kern 1pc b
+
+	8a \kern -1em b
+
+	9a \hskip 1em b
+
+	10a \hspace{35pt}b
+	
+	% 占位宽度空白
+	11a\hphantom{xyz}b
+
+	% 弹性长度空白
+	12a\hfill b
+
+	\subsection{LaTex控制符}
+	
+	\# \$ \% \{ \} \~{} \_{} \^{} \textbackslash \&	
+
+	\subsection{排版符号}
+	
+	\S \P \dag \ddag \copyright \pounds
+
+	\subsection{Tex标志符号}
+
+	\Tex{} \LaTex{} \LaTeXe{}
+
+	\subsection{引号}
+
+	% 1 左边的`(撇号)
+	` 
+	% 单引号字符表示右单引号
+	'	
+	% 连续两个撇号表示左双引号
+	``
+	% 连续两个单引号表示右双引号
+	''
+	``你好''
+
+	\subsection{连字符}
+
+	% 短连字符
+	-
+	% 中连字符
+	--
+	% 长连字符
+	---
+
+	\subsection{非英文字符}
+
+	\oe \OE \ae \AE \aa \AA \o \O \l \L \ss \SS !` ?`
+
+	\subsection{重音符号（以o为例）}
+	
+	\`o \'o \^o \''o \~o \=o \.o \u{o} \v{o} \h{o} \r{o} \t{o} \b{o} \c{o} \d{o}
+
+\end{document}
